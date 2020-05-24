@@ -2,7 +2,7 @@
 
 
 # Use this file to place scripts that are called from views.py
-def get_customer():
+def do_something():
     print('Hello from main.py')
 
     # Try creating a Test_Table in the mySQL DB from Models.py

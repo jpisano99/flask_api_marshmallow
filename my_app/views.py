@@ -3,6 +3,7 @@ from my_app.settings import app_cfg
 from flask import render_template, url_for, request, jsonify
 from my_app.models import Bookings, BookingSchema
 from flask_marshmallow import Marshmallow
+from my_app.main import do_something
 
 #
 # # Create ma for Marshmallow
@@ -35,7 +36,10 @@ def get_booking(id):
 def get_bookings(customer):
     print('lookup customer', customer)
     customer_bookings = Bookings.query.filter_by(erp_end_customer_name=customer).all()
-    print('found', len(customer_bookings), 'bookings')
+    if len(customer_bookings) == 0:
+        print('Nothing found for Customer:', customer)
+    else:
+        print('found', len(customer_bookings), 'bookings')
     result = bookings_schema.dump(customer_bookings)
     return jsonify(result)
 
@@ -89,3 +93,12 @@ def delete_booking(id):
   return booking_schema.jsonify(booking)
 
 
+# Do Something to Multiple Bookings using POST
+@app.route('/booking/do_something/<customer>', methods=['POST'])
+def process_something(customer):
+    print('lookup customer', customer)
+    customer_bookings = Bookings.query.filter_by(erp_end_customer_name=customer).all()
+    p
+    print('found', len(customer_bookings), 'bookings')
+    result = bookings_schema.dump(customer_bookings)
+    return jsonify(result)
