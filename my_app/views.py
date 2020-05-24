@@ -94,11 +94,17 @@ def delete_booking(id):
 
 
 # Do Something to Multiple Bookings using POST
-@app.route('/booking/do_something/<customer>', methods=['POST'])
-def process_something(customer):
-    print('lookup customer', customer)
+@app.route('/booking/process_customer/<customer>', methods=['POST'])
+def process_customer(customer):
+    print()
+    print('Looking Up Customer', customer)
     customer_bookings = Bookings.query.filter_by(erp_end_customer_name=customer).all()
-    p
-    print('found', len(customer_bookings), 'bookings')
     result = bookings_schema.dump(customer_bookings)
+
+    if len(customer_bookings) == 0:
+        print('\tNothing found for Customer:', customer)
+    else:
+        print('\tFound', len(customer_bookings), 'bookings')
+        do_something(result)
+
     return jsonify(result)
